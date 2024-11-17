@@ -154,14 +154,20 @@ export default function Index() {
           )}
         </Pressable>
       </View>
-      <Animated.FlatList
-        data={todos}
-        renderItem={renderItem}
-        keyExtractor={(todo) => todo.id.toString()}
-        contentContainerStyle={{ flexGrow: 1 }}
-        itemLayoutAnimation={LinearTransition}
-        keyboardDismissMode="on-drag"
-      />
+      {todos.length === 0 ? (
+        <Text style={styles.noTodosText}>
+          There are no todos at the moment, add one.
+        </Text>
+      ) : (
+        <Animated.FlatList
+          data={todos}
+          renderItem={renderItem}
+          keyExtractor={(todo) => todo.id.toString()}
+          contentContainerStyle={{ flexGrow: 1 }}
+          itemLayoutAnimation={LinearTransition}
+          keyboardDismissMode="on-drag"
+        />
+      )}
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
     </SafeAreaView>
   );
@@ -226,6 +232,12 @@ function createStyles(theme, colorScheme) {
     completedText: {
       textDecorationLine: "line-through",
       color: "gray",
+    },
+    noTodosText: {
+      textAlign: "center",
+      fontSize: 18,
+      color: theme.text,
+      marginTop: 20,
     },
   });
 }
